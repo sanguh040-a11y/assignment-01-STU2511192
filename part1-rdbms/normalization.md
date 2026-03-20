@@ -1,5 +1,6 @@
 ## Anomaly Analysis
 Insert Anomaly
+
 If you want to add a new product (e.g., a new item in inventory), you cannot insert it unless an order exists.
 Example:
 Columns involved: product_id, product_name, category, unit_price
