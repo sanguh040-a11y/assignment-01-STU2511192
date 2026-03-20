@@ -77,7 +77,17 @@ price
 Columns involved:
 order_id, product_id, product_name
 
-Conclusion:
+## Conclusion:
 This is a Delete Anomaly because deleting an order can remove important product data.
 
 These anomalies arise because multiple entities such as customers, products, orders, and sales representatives are stored in a single table, violating normalization principles.
+
+## Normalization Justification
+
+Keeping all data in a single table may seem simpler initially, but it introduces serious data integrity and maintenance issues. In the given dataset, customer, product, and sales representative information is repeated across multiple rows for every order. This redundancy leads to update anomalies. For example, if a product’s price changes, it must be updated in every row where that product appears. Missing even one row results in inconsistent data.
+
+Similarly, insert anomalies occur because new entities cannot be added independently. A new product cannot be inserted into the system unless it is associated with an order, which is impractical for inventory management. Delete anomalies are also problematic; removing an order may unintentionally delete important information about customers, products, or sales representatives.
+
+By normalizing the data into separate tables such as Customers, Products, Orders, and Sales Representatives, we eliminate redundancy and ensure data consistency. Each entity is stored only once, and relationships are maintained using foreign keys. This design improves scalability, reduces storage duplication, and ensures that updates, inserts, and deletes can be performed safely without unintended data loss.
+
+Therefore, normalization is not over-engineering but a necessary step to ensure data integrity, consistency, and long-term maintainability of the system.
