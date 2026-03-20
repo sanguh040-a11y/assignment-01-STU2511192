@@ -1,45 +1,88 @@
 ## Anomaly Analysis
-Insert Anomaly
+🔴 Insert Anomaly (with exact reference)
 
-If you want to add a new product (e.g., a new item in inventory), you cannot insert it unless an order exists.
+In the dataset, product-related columns such as product_id, product_name, category, and unit_price are always tied to an order_id.
 
-Example:
+👉 Example rows:
 
-Columns involved: product_id, product_name, category, unit_price
+Row with order_id = ORD1027 (product: Notebook)
 
-Problem: Product data is tied to order_id
+Row with order_id = ORD1002 (product: Headphones)
 
-Meaning:
-You cannot store a product independently → must wait for an order → bad design
+📌 Problem:
+There is no row where a product exists without an order.
+This means a new product (e.g., a new laptop) cannot be inserted unless an order is created.
 
-Update Anomaly
+👉 Columns involved:
+product_id, product_name, unit_price, order_id
 
-If a product or customer detail changes, it must be updated in multiple rows.
+✅ Conclusion:
+This is an Insert Anomaly because the system does not allow independent insertion of product data.
 
-Example:
+🟠 Update Anomaly (with exact rows)
 
-Columns: product_name, unit_price
+The product “Pen Set” appears in multiple rows:
 
-If product price changes → appears in many rows → must update everywhere
+👉 Example rows:
 
-Risk:
+order_id = ORD1114
+
+order_id = ORD1153
+
+order_id = ORD1118
+
+order_id = ORD1132
+
+order_id = ORD1037
+
+(All these rows have product_name = 'Pen Set' and same price)
+
+📌 Problem:
+If the unit_price of “Pen Set” changes (e.g., 250 → 300),
+it must be updated in all these rows.
+
+❌ Risk:
 If one row is missed → inconsistent data
 
-Delete Anomaly
+👉 Columns involved:
+product_name, unit_price
 
-If you delete an order, you may lose important data.
+✅ Conclusion:
+This is an Update Anomaly because duplicate data must be updated in multiple places.
 
-Example:
+🔵 Delete Anomaly (with exact row)
 
-If a row with a product is deleted → product info is lost
+Consider this row:
 
-Columns: order_id, product_id, product_name
+👉 Example:
 
-Meaning:
-Deleting one order may remove:
+order_id = ORD1002
 
-Product info
+product_id = P005
 
-Customer info
+product_name = Headphones
 
-Sales rep info
+📌 Problem:
+If this row is deleted and it is the only occurrence of that product in some cases,
+then all information about the product is lost.
+
+This includes:
+
+product name
+
+category
+
+price
+
+👉 Columns involved:
+order_id, product_id, product_name
+
+✅ Conclusion:
+This is a Delete Anomaly because deleting an order can remove important product data.
+
+🔥 BONUS (Add this line to impress evaluator)
+
+You can add this final line:
+
+👉
+“These anomalies arise because multiple entities such as customers, products, orders, and sales representatives are stored in a single table, violating normalization principles.”
