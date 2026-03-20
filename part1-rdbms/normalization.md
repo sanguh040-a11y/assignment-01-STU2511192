@@ -1,13 +1,13 @@
 ## Anomaly Analysis
-Insert Anomaly
-
+**Insert Anomaly
+**
 If you want to add a new product (e.g., a new item in inventory), you cannot insert it unless an order exists.
 
-Example:
+**Example:
+**
+**Columns involved:** product_id, product_name, category, unit_price
 
-Columns involved: product_id, product_name, category, unit_price
-
-Problem: Product data is tied to order_id
+**Problem: **Product data is tied to order_id
 
 Meaning:
 You cannot store a product independently → must wait for an order → bad design
